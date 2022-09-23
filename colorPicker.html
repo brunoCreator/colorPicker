@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style type="text/css">
+    
+
+.box{
+  height:50px;
+  width:50px;
+  //background:black;
+}
+
+
+.con{
+  display: flex;
+}
+.tile:hover use {
+   stroke: #000000;
+    
+}
+/* 
+criar um color picker onde voce seleciona uma cor na roda e a primeira coluna pode ser (analogus,complementary, ...) e as colunas em baixo são monocromatica
+
+--yt-spec-general-background-a: #f65337;
+--yt-spec-general-background-b: #fe7139;
+--yt-spec-general-background-c: #ffa433;
+--yt-spec-error-background: #fac350;
+--yt-spec-text-primary: #f8e54b;
+--yt-spec-text-secondary: #d2d64d;
+--yt-spec-text-disabled: #63994c;
+
+--yt-spec-text-primary-inverse: #2295cf;
+--yt-spec-call-to-action: #4d6cb1;
+--yt-spec-call-to-action-inverse: #584999;
+--yt-spec-suggested-action: #8e559e;
+--yt-spec-suggested-action-inverse: #cf3650; */
+
+  </style>
+</head>
+
+<body>
+  <input type="radio" id="html" name="fav_language" value="HTML">
+<label for="html">monochromatic</label><br>
+<input type="radio" id="css" name="fav_language" value="CSS">
+<label for="css">analogous</label><br>
+  <input type="radio" id="css" name="fav_language" value="CSS">
+<label for="css">complementary</label><br>
+  
+<svg id="wheel" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path id="piePiece" d="M 42.2,78.9 46.1,64.4 Q 50,65 53.88,64.48 L 57.7,78.9 Q 50,80 42.2,78.9Z" />
+  </defs>
+  </a><a id="t1" class="tile"><use xlink:href="#piePiece" fill="#63994c">
+  </a><a id="t2" class="tile"><use xlink:href="#piePiece" transform="rotate(30,50,50)" fill="#2295cf"/>
+  </a><a id="t3" class="tile" ><use xlink:href="#piePiece" transform="rotate(60,50,50)" fill="#4d6cb1"/>
+  </a><a id="t4" class="tile" ><use xlink:href="#piePiece" transform="rotate(90,50,50)" fill="#584999"/>
+  </a><a id="t5" class="tile" ><use xlink:href="#piePiece" transform="rotate(120,50,50)" fill="#8e559e"/>
+  </a><a id="t6" class="tile" ><use xlink:href="#piePiece" transform="rotate(150,50,50)" fill="#cf3650"/>
+  </a><a id="t7" class="tile" ><use xlink:href="#piePiece" transform="rotate(180,50,50)" fill="#f65337"/>
+  </a><a id="t8" class="tile" ><use xlink:href="#piePiece" transform="rotate(210,50,50)" fill="#fe7139"/>
+  </a><a id="t9" class="tile" ><use xlink:href="#piePiece" transform="rotate(240,50,50)" fill="#ffa433"/>
+  </a><a id="t10" class="tile" ><use xlink:href="#piePiece" transform="rotate(270,50,50)" fill="#fac350"/>
+  </a><a id="t11" class="tile" ><use xlink:href="#piePiece" transform="rotate(300,50,50)" fill="#f8e54b"/>
+  </a><a id="t12" class="tile" ><use xlink:href="#piePiece" transform="rotate(330,50,50)" fill="#d2d64d"/>
+  </a>
+  </svg>
+  <div>
+    <div id="primary" class="con">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+    <div id="s1" class="con">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+    <div id="s2" class="con">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+    <div id="s3" class="con">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+    <div id="s4" class="con">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+var tiles = document.getElementById('wheel').getElementsByTagName('a');
+
+
+
+for(var i=0; i< tiles.length; i++ )
+{
+ var tile = tiles[i];
+ tile.style.background = "blue";
+   tile.addEventListener("mousedown", selectColor,false);
+
+
+}
+
+function getRandomColor(color) {
+    var p = 1,
+        temp,
+        random = Math.random(),
+        result = '#';
+
+    while (p < color.length) {
+        temp = parseInt(color.slice(p, p += 2), 16)
+        temp += Math.floor((255 - temp) * random);
+        result += temp.toString(16).padStart(2, '0');
+    }
+    return result;
+}
+
+var childDivs = document.getElementById('primary').getElementsByTagName('div');
+
+function selectColor() {
+  
+  for(var i=0; i< childDivs.length; i++ )
+  {
+   var childDiv = childDivs[i];
+    var color = this.firstChild.getAttribute('fill');
+    var newColor = getRandomColor(color)
+   childDiv.style.background = newColor;
+    
+    
+    var sub = document.getElementById("s"+(i+1)).getElementsByTagName('div');
+for(var y=0; y< sub.length; y++ )
+{
+ var deb = sub[y];
+ deb.style.background = getRandomColor(newColor);
+}
+  }
+  
+  
+
+}
+
+
+
+
+
+
+
+</script>
+</html>
